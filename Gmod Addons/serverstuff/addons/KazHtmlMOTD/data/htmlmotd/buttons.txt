@@ -1,0 +1,29 @@
+Button1=on
+Button1NAME=Join TTT
+Button1IP=91.220.53.86:27015
+Button1NEW=no
+*
+Button2=on
+Button2NAME=Join ZombieRP
+Button2IP=91.220.53.86:27045
+Button2NEW=no
+*
+Button3=on
+Button3NAME=Join Deathrun
+Button3IP=89.238.160.166:27015
+Button3NEW=yes
+*
+Button4=on
+Button4NAME=Join Build
+Button4IP=83.250.27.103:27015
+Button4NEW=no
+*
+Button5=off
+Button5NAME=Join Gmod Racer
+Button5IP=91.220.53.86:27035
+Button5NEW=no
+*
+Button6=on
+Button6NAME=Join Floodmod
+Button6IP=91.220.53.86:27025
+Button6NEW=no
