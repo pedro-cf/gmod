@@ -1,6 +1,6 @@
 # Garrysmod Addons and Gamemodes
 
-This repository contains a collection ofGarrysmod addons and gamemodes.
+This repository contains a collection of Garrysmod addons and gamemodes.
 
 ## Addons
 
@@ -14,7 +14,9 @@ This repository contains a collection ofGarrysmod addons and gamemodes.
 - **evolveDR**: An easy to use server administration mod modified for the deathrun gamemode.
 - **katana**: Adds a katana weapon to Garry's Mod.
 - **lightsaber**: Implements a lightsaber weapon inspired by Star Wars.
+- **SolidVotePlus**: Voting functionality for Garry's Mod servers.
 
 ## Gamemodes
 
 - **deathrun**: Gamemode where Players navigate traps and obstacles while others trigger them.
+
