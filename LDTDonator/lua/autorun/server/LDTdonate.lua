@@ -1,10 +1,9 @@
 AddCSLuaFile( "autorun/client/cl_LDTdonate.lua" )
-local Player = FindMetaTable('Player')
 
 Msg([[
 
 ===============================================================
-========= LDT Donator System v2.0 successfuly started. ========
+========= LDT Donator System v1.0 successfuly started. ========
 ===============================================================
 
 ]])
@@ -13,7 +12,7 @@ Msg([[
 if !sql.TableExists("ldt_donator") then
 			Msg([[
 
-==> LDT Donator System v2.0: 'ldt_donator' SQL table not found!
+==> LDT Donator System v1.0: 'ldt_donator' SQL table not found!
 
 ]])
 
@@ -22,13 +21,13 @@ if !sql.TableExists("ldt_donator") then
 	if (sql.TableExists("ldt_donator")) then
 					Msg([[
 
-==> LDT Donator System v2.0: 'ldt_donator' SQL table created!
+==> LDT Donator System v1.0: 'ldt_donator' SQL table created!
 
 ]])
 	else
 					Msg([[
 
-==> LDT Donator System v2.0: [ERROR] Unable to create'ldt_donator' SQL table!
+==> LDT Donator System v1.0: [ERROR] Unable to create'ldt_donator' SQL table!
 
 ]])
 		print( sql.LastError( result ))
@@ -36,18 +35,9 @@ if !sql.TableExists("ldt_donator") then
 else
 			Msg([[
 
-==> LDT Donator System v2.0: 'ldt_donator' SQL table found!
+==> LDT Donator System v1.0: 'ldt_donator' SQL table found!
 
 ]])
-end
-
-function ProcessDonator ( ply )
-	if ply:IsDonator() then
-		ply:SetNWBool("LDTdonator", true)
-		ply:ChatPrint("Thank you for donating!")
-	else
-		ply:SetNWBool("LDTdonator", false)
-	end
 end
 
 -- Add Donator
@@ -56,7 +46,7 @@ concommand.Add("adddonator", function(pl , cmd, arg)
 		if pl then
 			pl:SendLua("Derma_Message(\"Invalid Steam ID!\", \"Donator Management\", \"Close\")")
 		else
-			print("==> LDT Donator System v2.0: Invalid SteamID!")
+			print("==> LDT Donator System v1.0: Invalid SteamID!")
 		end
 		return 
 	end
@@ -95,9 +85,20 @@ hook.Add( "PlayerInitialSpawn", "DonaterList_FS", function(ply)
 end )
  
 -- Check if the player is donator.
-function Player:IsDonator()
+function _R.Player:IsDonator()
 	return sql.QueryValue("SELECT steamID FROM ldt_donator WHERE steamID = '"..self:SteamID().."'")
 end 
+
+
+function ProcessDonator ( ply )
+	if ply:IsDonator() then
+		ply:SetNWBool("LDTdonator", true)
+		ply:ChatPrint("Donator: True")
+	else
+		ply:SetNWBool("LDTdonator", false)
+		ply:ChatPrint("Donator: False")
+	end
+end
 
 
 function WriteSQLDonator ( steamID, name, note )
@@ -114,7 +115,6 @@ function WriteSQLDonator ( steamID, name, note )
 end
 
 concommand.Add("donatormenu", function(pl, cmd, arg)
-	if !pl:IsAdmin() then return end
 	local completetable = sql.Query("SELECT * FROM ldt_donator")
 	if completetable then
 		if !pl then
@@ -135,34 +135,14 @@ concommand.Add("donatormenu", function(pl, cmd, arg)
 		if pl then
 			if pl:IsAdmin() then
 				umsg.Start("donatorsdone", pl)
-					umsg.Bool(sql.TableExists("ldt_donator_reservedslot"))
 				umsg.End()
 			end
 		end
 			Msg([[
 
-==> LDT Donator System v2.0: There are currently no donators!
+==> LDT Donator System v1.0: There are currently no donators!
 
 ]])
-	end
-end )
-
-hook.Add( "CheckPassword", "cpcheck", function(SteamID, IP, sv_password, ClientPassword, PlayerName )
-	if (player.GetAll() == game.MaxPlayers() and sql.TableExists("ldt_donator_reservedslot")) then
-		for _, p in pairs(player.GetAll()) do
-			if !p:IsDonator() then
-				p:Kick()
-			end
-		end
-	end
-end)
-
-concommand.Add( "togglereservedslot", function(pl, cmd, args)
-	if !pl:IsAdmin() then return end
-	if (sql.TableExists("ldt_donator_reservedslot")) then
-		sql.Query("DROP TABLE ldt_donator_reservedslot")
-	else
-		sql.Query("CREATE TABLE ldt_donator_reservedslot (w int)")
 	end
 end )
 

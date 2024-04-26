@@ -1,4 +1,4 @@
-local resSlot = false
+
 local donatordata = {}
 
 usermessage.Hook("SendDonator", function(msg)
@@ -9,8 +9,7 @@ donatordata[x]["name"] = msg:ReadString()
 donatordata[x]["note"] = msg:ReadString()
 end)
 
-usermessage.Hook("donatorsdone", function(msg)
-resSlot = msg:ReadBool()
+usermessage.Hook("donatorsdone", function()
 if !Donatormenu then vgui.Create("Donatormenu") end
 Donatormenu:Open()
 end)
@@ -24,8 +23,7 @@ self:SetPos(ScrW()*0.1,ScrH()*0.1)
 self:SetSize(500,400)
 self:SetTitle("Donator Management")
 self:SetDraggable( true )
-self.btnMaxim:SetVisible(false)
-self.btnMinim:SetVisible(false) 
+self:ShowCloseButton( true )
 
 self.List = vgui.Create("DListView", self)
 self.List:SetPos(10, 32)
@@ -80,7 +78,7 @@ end
 
 self.button2 = vgui.Create( "DButton", self)
 self.button2:SetText( "Current Players" )
-self.button2:SetPos( 10, self:GetTall()-35)
+self.button2:SetPos( 10, self:GetTall()-35 )
 self.button2:SetSize( 100, 25 )
 self.button2.DoClick = function ()
 	local menu = DermaMenu()
@@ -96,19 +94,7 @@ self.button2.DoClick = function ()
 	end
 	menu:Open()
 end
-
-self.resLbl = vgui.Create( "DLabel", self)
-self.resLbl:SetText( "Enable Reserved Slot:" )
-self.resLbl:SizeToContents()
-self.resLbl:SetPos( self:GetWide()- 140,self:GetTall()-25 )
-
-self.reservedCheck = vgui.Create( "DCheckBox", self )
-self.reservedCheck:SetPos( self:GetWide()-25, self:GetTall()-25 )
-self.reservedCheck:SetChecked(resSlot)
-self.reservedCheck.OnChange = function()
-	RunConsoleCommand("togglereservedslot")
-end
-
+ 
 end
 
 function PANEL:UpdateShit()
